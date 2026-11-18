@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d9488">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MRCP Egypt">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<title>الموسوعة الإكلينيكية المصرية للـ MRCP — محرك البحث والعيادة والطوارئ (1,557 موضوع)</title>
+<style>
+:root {
+  --bg: #0b1120; --panel: #111827; --card: #1e293b; --hover: #26354d;
+  --text: #f8fafc; --muted: #94a3b8; --border: #334155; --pri: #0d9488; --gold: #f59e0b;
+}
+body.light {
+  --bg: #f1f5f9; --panel: #ffffff; --card: #ffffff; --hover: #f8fafc;
+  --text: #0f172a; --muted: #475569; --border: #cbd5e1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+.ltr { direction: ltr; unicode-bidi: embed; font-weight: 700; color: #38bdf8; }
+body.light .ltr { color: #0369a1; }
+.topbar { background: var(--panel); border-bottom: 2px solid var(--pri); padding: 10px 18px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.brand { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.badge { background: var(--pri); color: #fff; padding: 3px 9px; border-radius: 6px; font-size: 12px; }
+.tabs { display: flex; gap: 5px; flex-wrap: wrap; }
+.tbtn { border: 1px solid var(--border); background: var(--card); color: var(--muted); padding: 6px 11px; border-radius: 8px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+.tbtn.active { background: var(--pri); color: #fff; border-color: var(--pri); }
+.main { flex: 1; display: grid; grid-template-columns: 340px 1fr; overflow: hidden; }
+.sidebar { background: var(--panel); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.filters { padding: 12px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+input, select { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; font-size: 13px; }
+.list { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.item { padding: 9px 11px; border-radius: 9px; background: var(--card); border: 1px solid transparent; cursor: pointer; }
+.item:hover, .item.active { border-color: var(--pri); background: var(--hover); }
+.stage { overflow-y: auto; padding: 20px 24px 50px; }
+.box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; line-height: 1.65; }
+.box.green { border-right: 5px solid #10b981; }
+.box.blue { border-right: 5px solid #3b82f6; }
+.box.red { border-right: 5px solid #f43f5e; }
+.box.amber { border-right: 5px solid #f59e0b; }
+h2 { font-size: 20px; margin-bottom: 6px; }
+h3 { font-size: 15px; color: #2dd4bf; margin-bottom: 6px; }
+body.light h3 { color: #0f766e; }
+ul { padding-right: 18px; }
+li { margin-bottom: 5px; }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; background: var(--card); border-radius: 10px; overflow: hidden; }
+th, td { padding: 9px 11px; border: 1px solid var(--border); text-align: right; font-size: 13px; }
+th { background: #0f172a; color: #fff; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand"><span class="badge">النسخة الإكلينيكية المصرية</span> الموسوعة الشاملة للـ MRCP والممارسة الطبية في مصر</div>
+  <div class="tabs">
+    <button class="tbtn active" id="tb-topics" onclick="setTab('topics')">📚 الـ 1,557 موضوعاً</button>
+    <button class="tbtn" id="tb-er" onclick="setTab('er')">🚑 طوارئ النبطشية والرعاية</button>
+    <button class="tbtn" id="tb-drugs" onclick="setTab('drugs')">💊 قاموس الأدوية المصرية</button>
+    <button class="tbtn" id="tb-ramadan" onclick="setTab('ramadan')">🌙 دليل رمضان والصيام</button>
+    <button class="tbtn" id="tb-safety" onclick="setTab('safety')">🤰 الحمل والكبد والكلى</button>
+    <button class="tbtn" id="tb-rx" onclick="setTab('rx')">📝 روشتات العيادة والتحويل</button>
+  </div>
+  <button class="tbtn" onclick="document.body.classList.toggle('light')">🌓 المظهر</button>
+</div>
+<div class="main" id="main-grid">
+  <aside class="sidebar" id="sidebar">
+    <div class="filters">
+      <input id="q" placeholder="ابحث باسم المرض، الدواء التجاري (Concor, Controloc...)، أو الشكوى..." oninput="filterTopics()">
+      <select id="ch" onchange="filterTopics()"></select>
+      <div id="cnt" style="font-size:11.5px;color:var(--muted);"></div>
+    </div>
+    <div class="list" id="tlist"></div>
+  </aside>
+  <main class="stage" id="stage"></main>
+</div>
+<script src="egyptian_clinical_bundle.js"></script>
+<script>
+const D = window.MRCP_EGYPT_DATA;
+let tab = 'topics', filtered = D.topics, cur = 0;
+
+function init() {
+  const sel = document.getElementById('ch');
+  sel.innerHTML = `<option value="0">كل التخصصات (${D.topics.length} موضوع)</option>` +
+    D.chapters.map(c => `<option value="${c.chapter_num}">فصل ${c.chapter_num}: ${c.specialty_ar} (${c.count})</option>`).join('');
+  filterTopics();
+}
+
+function setTab(t) {
+  tab = t;
+  document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('tb-' + t);
+  if (btn) btn.classList.add('active');
+  document.getElementById('sidebar').style.display = (t === 'topics') ? 'flex' : 'none';
+  document.getElementById('main-grid').style.gridTemplateColumns = (t === 'topics') ? '340px 1fr' : '1fr';
+  renderStage();
+}
+
+function filterTopics() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const ch = parseInt(document.getElementById('ch').value, 10);
+  filtered = D.topics.filter(t => {
+    if (ch > 0 && t.chapter_num !== ch) return false;
+    if (!q) return true;
+    const hay = JSON.stringify(t).toLowerCase();
+    return hay.includes(q);
+  });
+  cur = 0;
+  document.getElementById('cnt').textContent = `النتائج المعروضة: ${filtered.length} موضوع`;
+  document.getElementById('tlist').innerHTML = filtered.slice(0, 400).map((t, i) => `
+    <div class="item ${i===cur?'active':''}" onclick="cur=${i};filterTopicsSelect(${i})">
+      <div style="font-size:11px;color:var(--muted);">فصل ${t.chapter_num} • p.${t.book_pages}</div>
+      <div style="font-weight:700;font-size:13px;">${esc(t.title_ar)}</div>
+      <div class="ltr" style="font-size:11.5px;">${esc(t.title_en)}</div>
+    </div>`).join('');
+  renderStage();
+}
+
+function filterTopicsSelect(i) {
+  cur = i;
+  document.querySelectorAll('.item').forEach((el, idx) => el.classList.toggle('active', idx === i));
+  renderStage();
+}
+
+function renderStage() {
+  const st = document.getElementById('stage');
+  if (tab === 'topics') {
+    if (!filtered.length) { st.innerHTML = '<p>لا توجد نتائج مطابقة.</p>'; return; }
+    const t = filtered[cur];
+    const inv = t.investigations_egypt || {};
+    const imgs = (t.images || []).map((im, idx) => `<div class="box"><img src="../${im.rel_media}" style="max-width:420px;max-height:260px;border-radius:8px;background:#fff;padding:4px;"><div style="margin-top:6px;font-size:12.5px;"><b>صورة (p.${im.book_page}):</b> ${esc((t.image_captions_ar||[])[idx] || im.english_caption)}</div></div>`).join('');
+    st.innerHTML = `
+      <div class="box" style="background:linear-gradient(135deg,#0f2942,#1e293b);color:#fff;border-color:var(--pri);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <span class="badge">${esc(t.egypt_epidemiology_badge)}</span>
+          <a href="../01_Specialty_Egyptian_Clinical_References_PDF/Egyptian_Ref_${t.slug}.pdf" target="_blank" style="color:#fbbf24;font-weight:700;">📄 فتح ملف PDF التخصص الكامل</a>
+        </div>
+        <h2 style="margin-top:8px;">${esc(t.title_ar)} — <span class="ltr">${esc(t.title_en)}</span></h2>
+        <div style="font-size:12.5px;color:#cbd5e1;">التخصص: ${esc(t.specialty_ar)} | القسم: ${esc(t.section)} | صفحات الكتاب: p.${esc(t.book_pages)}</div>
+      </div>
+      <div class="box amber"><h3>🇪🇬 الواقع والشيوع في مصر</h3>${esc(t.egypt_prevalence_and_context)}</div>
+      <div class="box green"><h3>١. الخلاصة في كلمتين وفهم الميكانيزم</h3>${esc(t.essence_colloquial)}</div>
+      <div class="box blue"><h3>٢. شكوى العيان بلسانه في العيادة أو الاستقبال</h3>${esc(t.patient_complaint_eg)}</div>
+      <div class="box"><h3>٣. الأسباب وعوامل الخطورة</h3><ul>${(t.causes||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div class="box red"><h3>٤. العلامات السريرية وعلامات الخطر الحمراء (Red Flags)</h3><ul>${(t.signs_and_red_flags||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div class="box blue"><h3>٥. الفحوصات والتحاليل وتوافرها في مصر</h3>
+        <p><b>• مبدئياً (Initial):</b> ${esc(inv.initial_tests || '')}</p>
+        <p style="margin-top:6px;"><b>• الفحص التأكيدي الأدق (Gold Standard) والبديل العملي:</b> ${esc(inv.confirmatory_gold_and_availability || '')}</p>
+      </div>
+      <div class="box green"><h3>٦. خطة العلاج والروشتة المصرية بالأسماء التجارية والبدائل</h3><ul>${(t.management_and_rx_egypt||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div class="box red"><h3>⛔ ٧. أخطاء قاتلة شائعة في الممارسة المصرية — إوعى تقع فيها!</h3>${esc(t.egyptian_pitfalls)}</div>
+      <div class="box"><h3>٨. المضاعفات وإزاي تلحقها بدري</h3>${esc(t.complications)}</div>
+      <div class="box"><h3>٩. المتابعة الدورية وتفهيم العيان وأهله</h3>${esc(t.followup_and_counseling)}</div>
+      ${imgs}
+      <div class="box amber"><h3>💡 بصمة حفظ مصرية سريعة</h3>${esc(t.memory_hook_eg)}</div>
+    `;
+  } else if (tab === 'er') {
+    const list = (D.appendices.er || {}).protocols || [];
+    st.innerHTML = `<h2 style="margin-bottom:14px;">🚑 بروتوكولات شيفت الاستقبال والرعاية المركزة في مستشفيات مصر (${list.length} بروتوكول)</h2>` +
+      list.map(p => `<div class="box red">
+        <h3>[${esc(p.id)}] ${esc(p.title_ar)} — <span class="ltr">${esc(p.title_en)}</span></h3>
+        <p><b>التقاط الحالة فوراً:</b> ${esc(p.recognition_clues)}</p>
+        <p style="margin-top:6px;"><b>خطوات أول 15 دقيقة:</b></p><ul>${(p.first_15_min_actions||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+        <table><tr><th>الدواء والاسم التجاري المصري</th><th>الحل ومعدل التنقيط</th><th>ملاحظات</th></tr>
+        ${(p.egyptian_ampoules_and_infusions||[]).map(a=>`<tr><td>${esc(a.drug_and_trade)}</td><td>${esc(a.preparation_and_rate)}</td><td>${esc(a.notes)}</td></tr>`).join('')}</table>
+        <p style="margin-top:8px;color:#fb7185;"><b>⛔ أخطاء قاتلة:</b> ${esc(p.fatal_mistakes_to_avoid)}</p>
+      </div>`).join('');
+  } else if (tab === 'drugs') {
+    const list = (D.appendices.formulary || {}).drugs || [];
+    st.innerHTML = `<h2 style="margin-bottom:10px;">💊 القاموس الشامل للأدوية والأسماء التجارية المصرية (${list.length} دواء أساسي)</h2>
+      <input placeholder="ابحث عن اسم علمي أو اسم تجاري مصري..." oninput="filterDrugRows(this.value)" style="margin-bottom:12px;">
+      <table id="drug-tbl"><tr><th>التخصص</th><th>المادة الفعالة</th><th>ملاحظة الـ MRCP</th><th>الأسماء التجارية المصرية والتركيزات</th><th>الجرعة والتوافر</th><th>تحذير هام</th></tr>
+      ${list.map(d=>`<tr><td>${esc(d.specialty)}</td><td class="ltr">${esc(d.generic_name)}</td><td>${esc(d.uk_mrcp_note)}</td><td><b>${esc(d.egypt_trade_names_and_strengths)}</b></td><td>${esc(d.practical_dose)} (${esc(d.availability_in_egypt)})</td><td>${esc(d.critical_warning)}</td></tr>`).join('')}</table>`;
+  } else if (tab === 'ramadan') {
+    const list = (D.appendices.ramadan || {}).sections || [];
+    st.innerHTML = `<h2 style="margin-bottom:14px;">🌙 دليل ضبط الأمراض المزمنة والأدوية في شهر رمضان والصيام</h2>` +
+      list.map(s => `<div class="box amber"><h3>${esc(s.title_ar)} — <span class="ltr">${esc(s.title_en)}</span></h3>
+        <p><b>⛔ ممنوع من الصيام طبياً:</b> ${(s.who_must_not_fast||[]).join(' | ')}</p>
+        <table><tr><th>المجموعة والبراند المصري</th><th>قبل رمضان</th><th>التعديل في رمضان (الإفطار والسحور)</th><th>نصيحة</th></tr>
+        ${(s.medication_adjustments_table||[]).map(r=>`<tr><td>${esc(r.drug_group_and_eg_brands)}</td><td>${esc(r.before_ramadan_regimen)}</td><td>${esc(r.ramadan_iftar_suhoor_adjustment)}</td><td>${esc(r.clinical_tip)}</td></tr>`).join('')}</table>
+      </div>`).join('');
+  } else if (tab === 'safety') {
+    const sf = D.appendices.safety || {};
+    st.innerHTML = `<h2 style="margin-bottom:14px;">🤰 دليل أمان وتعديل الأدوية في الحمل والرضاعة والكبد والكلى</h2>
+      <div class="box green"><h3>أولاً: الحمل والرضاعة</h3><table><tr><th>الحالة</th><th>الآمن في مصر</th><th>الممنوع تماماً</th><th>ملاحظة</th></tr>
+      ${(sf.pregnancy_and_lactation||[]).map(x=>`<tr><td>${esc(x.condition)}</td><td>${esc(x.safe_drugs_eg)}</td><td>${esc(x.contraindicated_drugs_eg)}</td><td>${esc(x.clinical_pearl)}</td></tr>`).join('')}</table></div>
+      <div class="box blue"><h3>ثانياً: قصور الكلى والغسيل الكلوي</h3><table><tr><th>الدواء والبراند</th><th>قاعدة eGFR</th><th>البديل الآمن في مصر</th></tr>
+      ${(sf.renal_impairment_and_dialysis||[]).map(x=>`<tr><td>${esc(x.drug_class_and_brands)}</td><td>${esc(x.egfr_cutoff_rule)}</td><td>${esc(x.safer_egyptian_alternative)}</td></tr>`).join('')}</table></div>
+      <div class="box amber"><h3>ثالثاً: مرضى التليف الكبدي</h3><table><tr><th>المشكلة</th><th>تجنب تماماً</th><th>الاختيار الآمن في مصر</th></tr>
+      ${(sf.hepatic_cirrhosis_safety||[]).map(x=>`<tr><td>${esc(x.clinical_issue)}</td><td>${esc(x.avoid_completely)}</td><td>${esc(x.safe_choice_and_dose_eg)}</td></tr>`).join('')}</table></div>`;
+  } else if (tab === 'rx') {
+    const list = (D.appendices.rx || {}).cases || [];
+    st.innerHTML = `<h2 style="margin-bottom:14px;">📝 دليل روشتات العيادة الاسترشادية ومتى تحوّل المريض فوراً (${list.length} سيناريو)</h2>` +
+      list.map(c => `<div class="box green"><h3>[${esc(c.id)}] ${esc(c.condition_ar)} — <span class="ltr">${esc(c.condition_en)}</span></h3>
+        <p><b>الفحوصات المطلوبة:</b> ${esc(c.workup_before_or_with_rx)}</p>
+        <table><tr><th>الصنف الدوائي (العلمي والتجاري المصري)</th><th>طريقة الاستعمال (Sig)</th></tr>
+        ${(c.prescription_items||[]).map(i=>`<tr><td><b>${esc(i.item)}</b></td><td>${esc(i.sig_ar)}</td></tr>`).join('')}</table>
+        <p style="margin-top:8px;"><b>نصيحة العيان:</b> ${esc(c.counseling_ar)}</p>
+        <p style="margin-top:6px;color:#fb7185;"><b>🚨 التحويل الفوري (Urgent Referral):</b> ${esc(c.urgent_referral_red_flags)}</p>
+      </div>`).join('');
+  }
+}
+
+function filterDrugRows(v) {
+  const q = v.toLowerCase();
+  document.querySelectorAll('#drug-tbl tr').forEach((tr, i) => {
+    if (i === 0) return;
+    tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+init();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => console.log('[PWA] Service Worker registered successfully:', reg.scope))
+      .catch((err) => console.error('[PWA] Service Worker registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>
