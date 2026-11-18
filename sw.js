@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mrcp-egypt-pwa-v1';
+const CACHE_NAME = 'mrcp-egypt-pwa-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,54 +8,58 @@ const ASSETS_TO_CACHE = [
   './icon-512.png'
 ];
 
-// Install: Cache core application bundle and database
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[PWA] Caching all offline assets...');
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE)));
   self.skipWaiting();
 });
 
-// Activate: Clean old caches if updated
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(
-        keyList.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log('[PWA] Removing old cache:', key);
-            return caches.delete(key);
-          }
-        })
-      );
-    })
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((key) => (key !== CACHE_NAME ? caches.delete(key) : undefined)))
+    )
   );
   self.clients.claim();
 });
 
-// Fetch: Cache First strategy with Network Fallback
+// الصفحة الرئيسية: الشبكة أولاً (عشان التحديثات توصل فوراً) ثم الكاش لو أوفلاين أو الشبكة بطيئة
+async function networkFirst(req) {
+  const cache = await caches.open(CACHE_NAME);
+  try {
+    const res = await Promise.race([
+      fetch(req),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 4000))
+    ]);
+    if (res && res.ok) cache.put(req, res.clone());
+    return res;
+  } catch (err) {
+    return (await cache.match(req, { ignoreSearch: true })) ||
+           (await cache.match('./index.html')) ||
+           Response.error();
+  }
+}
+
+// باقي الملفات (الداتا الكبيرة والأيقونات): الكاش أولاً
+async function cacheFirst(req) {
+  const cached = await caches.match(req);
+  if (cached) return cached;
+  try {
+    const res = await fetch(req);
+    if (res && res.ok && res.type === 'basic') {
+      const copy = res.clone();
+      caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+    }
+    return res;
+  } catch (err) {
+    return Response.error();
+  }
+}
+
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-          return networkResponse;
-        }
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-        return networkResponse;
-      });
-    }).catch(() => {
-      // Offline fallback
-      return caches.match('./index.html');
-    })
-  );
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return; // الخطوط والمصادر الخارجية تعدّي عادي
+  const isPage = req.mode === 'navigate' || url.pathname.endsWith('/') || url.pathname.endsWith('/index.html');
+  event.respondWith(isPage ? networkFirst(req) : cacheFirst(req));
 });
