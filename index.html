@@ -81,15 +81,15 @@ bdi{unicode-bidi:isolate}
 .topbar .wrap{padding-block:.5rem}
 .bar{display:flex;align-items:center;gap:.5rem}
 .brand{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:.125rem .625rem}
-.brand h1{font-size:clamp(1rem,4.5vw,1.375rem);font-weight:800;line-height:1.4;text-wrap:balance}
+.brand h1{font-size:clamp(1rem,4.2vw,1.375rem);font-weight:800;line-height:1.4;text-wrap:balance}
 .badge{display:inline-block;background:var(--pri);color:#fff;padding:.125rem .625rem;border-radius:8px;font-size:.8125rem;font-weight:700;line-height:1.6}
 .icon-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:.375rem;padding:0 .75rem;border:1px solid var(--border);border-radius:10px;background:var(--card);font-weight:700;font-size:.875rem;flex:none}
 .icon-btn .lbl{display:none}
 .tabs-wrap{overflow:hidden;max-height:6rem;transition:max-height .2s ease,visibility 0s}
-.tabs{display:flex;gap:.5rem;overflow-x:auto;scroll-snap-type:x proximity;white-space:nowrap;
+.tabs{display:flex;gap:.5rem;overflow-x:auto;white-space:nowrap;
   scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;padding-block:.375rem .125rem}
 .tabs::-webkit-scrollbar{display:none}
-.tbtn{flex:0 0 auto;scroll-snap-align:center;min-height:44px;padding:0 .875rem;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:10px;font-weight:700;font-size:.875rem}
+.tbtn{flex:0 0 auto;min-height:44px;padding:0 .875rem;border:1px solid var(--border);background:var(--card);color:var(--muted);border-radius:10px;font-weight:700;font-size:.875rem}
 .tbtn.active{background:var(--pri);color:#fff;border-color:var(--pri)}
 
 /* ============ التخطيط (موبايل أولاً) ============ */
@@ -127,16 +127,18 @@ body.drawer-open .cats{transform:none;visibility:visible;transition:transform .2
 .search input::-webkit-search-cancel-button,.search input::-webkit-search-decoration{-webkit-appearance:none;display:none}
 .search input::placeholder{color:var(--muted);opacity:1}
 .search .clear{position:absolute;inset-block:0;inset-inline-end:0;width:44px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;border-radius:10px}
-.catbtn{display:flex;align-items:center;gap:.5rem;width:100%;min-height:44px;padding:0 .875rem;border:1px solid var(--border);border-radius:10px;background:var(--card);font-weight:700;font-size:.9375rem;text-align:start}
+.filter-row{display:flex;align-items:center;gap:.625rem}
+.catbtn{display:flex;align-items:center;gap:.5rem;flex:1 1 auto;min-width:0;min-height:44px;padding:0 .875rem;border:1px solid var(--border);border-radius:10px;background:var(--card);font-weight:700;font-size:.9375rem;text-align:start}
 .catbtn .cur{margin-inline-start:auto;color:var(--accent);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.count{font-size:.875rem;color:var(--muted)}
+.count{flex:none;font-size:.8125rem;font-weight:600;color:var(--muted);white-space:nowrap}
 
 /* قائمة المواضيع */
 .list{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
   padding:.5rem .75rem calc(1rem + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:.625rem}
+.list>*{flex:none}
 .sect{position:sticky;top:0;z-index:2;margin-inline:-.75rem;padding:.5rem 1rem;background:var(--panel);border-bottom:1px solid var(--border);font-weight:800;font-size:.875rem;color:var(--accent)}
 .card{display:block;width:100%;min-height:44px;text-align:start;padding:.875rem 1rem;border-radius:14px;background:var(--card);border:1px solid var(--border);
-  content-visibility:auto;contain-intrinsic-size:auto 7rem;scroll-margin-top:3rem}
+  scroll-margin-top:3rem}
 .card:active{transform:scale(.99)}
 .card.active{border-color:var(--accent);background:var(--sel);box-shadow:inset 0 0 0 1px var(--accent)}
 .t-ar{display:block;font-weight:700;font-size:1.125rem;line-height:1.55;text-wrap:balance;overflow-wrap:break-word}
@@ -158,8 +160,8 @@ body.drawer-open .cats{transform:none;visibility:visible;transition:transform .2
 .backbar{display:flex;align-items:center;gap:.5rem;padding:.25rem .75rem;background:var(--panel);border-bottom:1px solid var(--border);flex:none}
 .backbar .icon-btn{padding:0 1rem}
 #bar-title{flex:1;min-width:0;font-weight:700;font-size:.9375rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.stage{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
-  padding:1rem clamp(.75rem,3vw,1.75rem) calc(3.5rem + env(safe-area-inset-bottom,0px))}
+.stage{--pad:clamp(.75rem,3vw,1.75rem);flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  padding:1rem var(--pad) calc(3.5rem + env(safe-area-inset-bottom,0px))}
 .stage:focus{outline:none}
 .article{max-width:60rem;margin-inline:auto}
 .tab-title{font-size:clamp(1.125rem,2.5vw,1.375rem);line-height:1.5;margin-bottom:.875rem;text-wrap:balance}
@@ -169,6 +171,11 @@ body.drawer-open .cats{transform:none;visibility:visible;transition:transform .2
 .box.red{border-inline-start:5px solid #f43f5e}
 .box.amber{border-inline-start:5px solid #f59e0b}
 .box p+p{margin-top:.375rem}
+.box{scroll-margin-top:3.5rem}
+.toc{position:sticky;top:-1rem;z-index:4;display:flex;gap:.5rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;background:var(--bg);padding:.5rem 0;margin-bottom:.5rem;border-bottom:1px solid var(--border)}
+.toc::-webkit-scrollbar{display:none}
+.toc button{flex:0 0 auto;min-height:44px;padding:0 .875rem;border-radius:999px;border:1px solid var(--border);background:var(--card);font-size:.875rem;font-weight:700;color:var(--text)}
+.toc button:active{background:var(--pri);color:#fff}
 .hero{background:linear-gradient(135deg,#0f2942,#1e293b);color:#fff;border-color:var(--pri)}
 .hero .ltr{color:#7dd3fc}
 .hero-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
@@ -189,6 +196,17 @@ th,td{padding:.5rem .75rem;border:1px solid var(--border);text-align:start;font-
 th{background:var(--th);color:#fff}
 .drug-search{width:100%;min-height:44px;padding:.5rem .875rem;font-size:max(16px,1rem);border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);margin-bottom:.75rem}
 
+/* الجداول على الموبايل: كل صف بيتحول لكارت (اسم الحقل + القيمة) */
+@media (max-width:767.98px){
+  .tbl-wrap{border:0;overflow:visible;border-radius:0}
+  table,.tbl-wrap.wide table{min-width:0;display:block;background:none}
+  thead{display:none}
+  tbody{display:block}
+  tr{display:block;border:1px solid var(--border);border-radius:12px;margin-bottom:.625rem;background:var(--bg);overflow:hidden}
+  td{display:block;border:0;border-bottom:1px solid var(--border);padding:.5rem .75rem}
+  td:last-child{border-bottom:0}
+  td::before{content:attr(data-label);display:block;font-size:.8125rem;font-weight:800;color:var(--accent);margin-bottom:.125rem}
+}
 /* ============ تابلت ============ */
 @media (min-width:480px){
   .icon-btn .lbl{display:inline}
@@ -209,13 +227,20 @@ th{background:var(--th);color:#fff}
   .tabs-wrap{max-height:none}
   .tabs{flex-wrap:wrap;overflow:visible}
   .cats-head{padding-inline:1rem}
+  @media (hover:hover){}
 }
 @media (min-width:1440px){
-  .stage{padding-inline:2rem}
+  .stage{--pad:2rem}
 }
 /* إخفاء صف الأقسام عند السكرول لتحت (موبايل/تابلت فقط) */
 @media (max-width:1023.98px){
   body.hdr-compact .tabs-wrap{max-height:0;visibility:hidden;transition:max-height .2s ease,visibility 0s .2s}
+}
+/* أثناء قراءة موضوع على الموبايل: هيدر مصغّر عشان المحتوى ياخد المساحة */
+@media (max-width:767.98px){
+  body.tab-topics.view-detail .tabs-wrap,
+  body.tab-topics.view-detail .badge{display:none}
+  body.tab-topics.view-detail .brand h1{font-size:1rem}
 }
 /* الوضع الأفقي على الموبايل */
 @media (max-height:480px) and (orientation:landscape){
@@ -275,8 +300,10 @@ th{background:var(--th);color:#fff}
         <input id="q" type="search" placeholder="ابحث بالمرض أو الدواء" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
         <button type="button" class="clear" id="q-clear" aria-label="مسح البحث" hidden>✕</button>
       </div>
-      <button type="button" class="catbtn" id="btn-cats" aria-expanded="false" aria-controls="cats"><span aria-hidden="true">☰</span><span>التصنيفات</span><span class="cur" id="cat-current">الكل</span></button>
-      <div class="count" id="cnt" role="status" aria-live="polite"></div>
+      <div class="filter-row">
+        <button type="button" class="catbtn" id="btn-cats" aria-expanded="false" aria-controls="cats"><span aria-hidden="true">☰</span><span>التصنيفات</span><span class="cur" id="cat-current">الكل</span></button>
+        <div class="count" id="cnt" role="status" aria-live="polite"></div>
+      </div>
     </div>
     <div class="list" id="tlist" aria-busy="true">
       <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
@@ -562,7 +589,7 @@ function filterTopics() {
   list.removeAttribute('aria-busy');
   list.innerHTML = '';
   list.scrollTop = 0;
-  $('cnt').textContent = 'النتائج المعروضة: ' + nf(filtered.length) + ' موضوع';
+  $('cnt').textContent = nf(filtered.length) + ' موضوع';
   updateCatUI();
   if (!filtered.length) {
     list.innerHTML = '<div class="empty"><p class="empty-t">لا توجد نتائج مطابقة</p><p class="muted">جرّب كلمة أخرى، أو امسح البحث والفلتر.</p><button type="button" class="btn" data-act="reset">مسح البحث والفلتر</button></div>';
@@ -617,9 +644,17 @@ document.addEventListener('keydown', function (e) {
 function shouldRenderStage() {
   return tab !== 'topics' || !mqMobile.matches || document.body.classList.contains('view-detail');
 }
-var sec = function (cls, title, body) { return '<section class="box ' + cls + '"><h3>' + T(title) + '</h3>' + body + '</section>'; };
+var sec = function (cls, title, body, id) { return '<section class="box ' + cls + '"' + (id ? ' id="' + id + '"' : '') + '><h3>' + T(title) + '</h3>' + body + '</section>'; };
 var ul = function (a) { return '<ul>' + (a || []).map(function (x) { return '<li>' + T(x) + '</li>'; }).join('') + '</ul>'; };
-var tbl = function (rows, cls, id) { return '<div class="tbl-wrap ' + (cls || '') + '"><table' + (id ? ' id="' + id + '"' : '') + '>' + rows + '</table></div>'; };
+/* heads: مصفوفة عناوين الأعمدة، rows: مصفوفة صفوف (كل صف = مصفوفة خلايا HTML جاهزة) */
+var tbl = function (heads, rows, cls, id, cellCls) {
+  var th = '<thead><tr>' + heads.map(function (x) { return '<th>' + T(x) + '</th>'; }).join('') + '</tr></thead>';
+  var tb = '<tbody>' + rows.map(function (r) {
+    return '<tr>' + r.map(function (c, i) { return '<td data-label="' + esc(heads[i]) + '"' + (cellCls && cellCls[i] ? ' class="' + cellCls[i] + '"' : '') + '>' + c + '</td>'; }).join('') + '</tr>';
+  }).join('') + '</tbody>';
+  return '<div class="tbl-wrap ' + (cls || '') + '"><table' + (id ? ' id="' + id + '"' : '') + '>' + th + tb + '</table></div>';
+};
+var rowsOf = function (a, f) { return (a || []).map(f); };
 var map = function (a, f) { return (a || []).map(f).join(''); };
 
 function renderStage() {
@@ -628,12 +663,28 @@ function renderStage() {
   if (tab === 'topics') {
     if (!filtered.length) { st.innerHTML = '<p class="muted">لا توجد نتائج مطابقة.</p>'; $('bar-title').textContent = ''; return; }
     var t = filtered[cur] || filtered[0];
-    $('bar-title').textContent = t.title_ar || '';
+    $('bar-title').innerHTML = 'فصل ' + esc(t.chapter_num) + ' · ص <bdi dir="ltr">' + esc(t.book_pages) + '</bdi>';
     var inv = t.investigations_egypt || {};
     var imgs = map(t.images, function (im, idx) {
       var cap = (t.image_captions_ar || [])[idx] || im.english_caption || '';
       return '<figure class="box"><img src="../' + esc(im.rel_media) + '" alt="' + esc(cap) + '" loading="lazy" decoding="async" onerror="this.closest(\'figure\').hidden=true"><figcaption><b>صورة (p.' + esc(im.book_page) + '):</b> ' + T(cap) + '</figcaption></figure>';
     });
+    var P = [
+      ['amber', '🇪🇬 الواقع والشيوع في مصر', '<p>' + T(t.egypt_prevalence_and_context) + '</p>', 'الشيوع'],
+      ['green', '١. الخلاصة في كلمتين وفهم الميكانيزم', '<p>' + T(t.essence_colloquial) + '</p>', 'الخلاصة'],
+      ['blue', '٢. شكوى العيان بلسانه في العيادة أو الاستقبال', '<p>' + T(t.patient_complaint_eg) + '</p>', 'الشكوى'],
+      ['', '٣. الأسباب وعوامل الخطورة', ul(t.causes), 'الأسباب'],
+      ['red', '٤. العلامات السريرية وعلامات الخطر الحمراء (Red Flags)', ul(t.signs_and_red_flags), 'العلامات'],
+      ['blue', '٥. الفحوصات والتحاليل وتوافرها في مصر',
+        '<p><b>• مبدئياً (Initial):</b> ' + T(inv.initial_tests) + '</p>' +
+        '<p><b>• الفحص التأكيدي الأدق (Gold Standard) والبديل العملي:</b> ' + T(inv.confirmatory_gold_and_availability) + '</p>', 'الفحوصات'],
+      ['green', '٦. خطة العلاج والروشتة المصرية بالأسماء التجارية والبدائل', ul(t.management_and_rx_egypt), 'العلاج'],
+      ['red', '⛔ ٧. أخطاء قاتلة شائعة في الممارسة المصرية — إوعى تقع فيها!', '<p>' + T(t.egyptian_pitfalls) + '</p>', 'أخطاء قاتلة'],
+      ['', '٨. المضاعفات وإزاي تلحقها بدري', '<p>' + T(t.complications) + '</p>', 'المضاعفات'],
+      ['', '٩. المتابعة الدورية وتفهيم العيان وأهله', '<p>' + T(t.followup_and_counseling) + '</p>', 'المتابعة']
+    ];
+    var toc = '<nav class="toc" aria-label="فهرس الموضوع">' + P.map(function (p, i) { return '<button type="button" data-go="sec-' + i + '">' + esc(p[3]) + '</button>'; }).join('') + '</nav>';
+    var body = P.map(function (p, i) { return sec(p[0], p[1], p[2], 'sec-' + i); }).join('');
     st.innerHTML = '<article class="article">' +
       '<div class="box hero"><div class="hero-top">' +
         (t.egypt_epidemiology_badge ? '<span class="badge">' + T(t.egypt_epidemiology_badge) + '</span>' : '<span></span>') +
@@ -641,19 +692,7 @@ function renderStage() {
         '<h2 class="d-ar" dir="rtl">' + T(t.title_ar) + '</h2>' +
         (t.title_en ? '<div class="d-en ltr" dir="ltr">' + esc(t.title_en) + '</div>' : '') +
         '<div class="d-meta">التخصص: ' + T(t.specialty_ar) + ' | القسم: ' + T(t.section) + ' | صفحات الكتاب: <bdi dir="ltr">p.' + esc(t.book_pages) + '</bdi></div></div>' +
-      sec('amber', '🇪🇬 الواقع والشيوع في مصر', '<p>' + T(t.egypt_prevalence_and_context) + '</p>') +
-      sec('green', '١. الخلاصة في كلمتين وفهم الميكانيزم', '<p>' + T(t.essence_colloquial) + '</p>') +
-      sec('blue', '٢. شكوى العيان بلسانه في العيادة أو الاستقبال', '<p>' + T(t.patient_complaint_eg) + '</p>') +
-      sec('', '٣. الأسباب وعوامل الخطورة', ul(t.causes)) +
-      sec('red', '٤. العلامات السريرية وعلامات الخطر الحمراء (Red Flags)', ul(t.signs_and_red_flags)) +
-      sec('blue', '٥. الفحوصات والتحاليل وتوافرها في مصر',
-        '<p><b>• مبدئياً (Initial):</b> ' + T(inv.initial_tests) + '</p>' +
-        '<p><b>• الفحص التأكيدي الأدق (Gold Standard) والبديل العملي:</b> ' + T(inv.confirmatory_gold_and_availability) + '</p>') +
-      sec('green', '٦. خطة العلاج والروشتة المصرية بالأسماء التجارية والبدائل', ul(t.management_and_rx_egypt)) +
-      sec('red', '⛔ ٧. أخطاء قاتلة شائعة في الممارسة المصرية — إوعى تقع فيها!', '<p>' + T(t.egyptian_pitfalls) + '</p>') +
-      sec('', '٨. المضاعفات وإزاي تلحقها بدري', '<p>' + T(t.complications) + '</p>') +
-      sec('', '٩. المتابعة الدورية وتفهيم العيان وأهله', '<p>' + T(t.followup_and_counseling) + '</p>') +
-      imgs +
+      toc + body + imgs +
       sec('amber', '💡 بصمة حفظ مصرية سريعة', '<p>' + T(t.memory_hook_eg) + '</p>') +
       '</article>';
   } else if (tab === 'er') {
@@ -663,18 +702,18 @@ function renderStage() {
         return '<section class="box red"><h3>[' + esc(p.id) + '] ' + T(p.title_ar) + ' — <span class="ltr">' + esc(p.title_en) + '</span></h3>' +
           '<p><b>التقاط الحالة فوراً:</b> ' + T(p.recognition_clues) + '</p>' +
           '<p><b>خطوات أول 15 دقيقة:</b></p>' + ul(p.first_15_min_actions) +
-          tbl('<tr><th>الدواء والاسم التجاري المصري</th><th>الحل ومعدل التنقيط</th><th>ملاحظات</th></tr>' +
-            map(p.egyptian_ampoules_and_infusions, function (a) { return '<tr><td>' + T(a.drug_and_trade) + '</td><td>' + T(a.preparation_and_rate) + '</td><td>' + T(a.notes) + '</td></tr>'; })) +
+          tbl(['الدواء والاسم التجاري المصري', 'الحل ومعدل التنقيط', 'ملاحظات'],
+            rowsOf(p.egyptian_ampoules_and_infusions, function (a) { return [T(a.drug_and_trade), T(a.preparation_and_rate), T(a.notes)]; })) +
           '<p class="red-t" style="margin-top:.5rem"><b>⛔ أخطاء قاتلة:</b> ' + T(p.fatal_mistakes_to_avoid) + '</p></section>';
       });
   } else if (tab === 'drugs') {
     var dr = (D.appendices.formulary || {}).drugs || [];
     st.innerHTML = '<h2 class="tab-title">💊 القاموس الشامل للأدوية والأسماء التجارية المصرية (' + nf(dr.length) + ' دواء أساسي)</h2>' +
       '<input id="drug-q" class="drug-search" type="search" placeholder="ابحث عن اسم علمي أو اسم تجاري مصري" aria-label="بحث في قاموس الأدوية" autocomplete="off">' +
-      tbl('<tr><th>التخصص</th><th>المادة الفعالة</th><th>ملاحظة الـ MRCP</th><th>الأسماء التجارية المصرية والتركيزات</th><th>الجرعة والتوافر</th><th>تحذير هام</th></tr>' +
-        map(dr, function (d) {
-          return '<tr><td>' + T(d.specialty) + '</td><td class="ltr">' + esc(d.generic_name) + '</td><td>' + T(d.uk_mrcp_note) + '</td><td><b>' + T(d.egypt_trade_names_and_strengths) + '</b></td><td>' + T(d.practical_dose) + ' (' + T(d.availability_in_egypt) + ')</td><td>' + T(d.critical_warning) + '</td></tr>';
-        }), 'wide', 'drug-tbl');
+      tbl(['التخصص', 'المادة الفعالة', 'ملاحظة الـ MRCP', 'الأسماء التجارية المصرية والتركيزات', 'الجرعة والتوافر', 'تحذير هام'],
+        rowsOf(dr, function (d) {
+          return [T(d.specialty), esc(d.generic_name), T(d.uk_mrcp_note), '<b>' + T(d.egypt_trade_names_and_strengths) + '</b>', T(d.practical_dose) + ' (' + T(d.availability_in_egypt) + ')', T(d.critical_warning)];
+        }), 'wide', 'drug-tbl', [null, 'ltr']);
     $('drug-q').addEventListener('input', function (e) { filterDrugRows(e.target.value); });
   } else if (tab === 'ramadan') {
     var rm = (D.appendices.ramadan || {}).sections || [];
@@ -682,27 +721,27 @@ function renderStage() {
       map(rm, function (s) {
         return '<section class="box amber"><h3>' + T(s.title_ar) + ' — <span class="ltr">' + esc(s.title_en) + '</span></h3>' +
           '<p><b>⛔ ممنوع من الصيام طبياً:</b> ' + (s.who_must_not_fast || []).map(T).join(' | ') + '</p>' +
-          tbl('<tr><th>المجموعة والبراند المصري</th><th>قبل رمضان</th><th>التعديل في رمضان (الإفطار والسحور)</th><th>نصيحة</th></tr>' +
-            map(s.medication_adjustments_table, function (r) { return '<tr><td>' + T(r.drug_group_and_eg_brands) + '</td><td>' + T(r.before_ramadan_regimen) + '</td><td>' + T(r.ramadan_iftar_suhoor_adjustment) + '</td><td>' + T(r.clinical_tip) + '</td></tr>'; })) +
+          tbl(['المجموعة والبراند المصري', 'قبل رمضان', 'التعديل في رمضان (الإفطار والسحور)', 'نصيحة'],
+            rowsOf(s.medication_adjustments_table, function (r) { return [T(r.drug_group_and_eg_brands), T(r.before_ramadan_regimen), T(r.ramadan_iftar_suhoor_adjustment), T(r.clinical_tip)]; })) +
           '</section>';
       });
   } else if (tab === 'safety') {
     var sf = D.appendices.safety || {};
     st.innerHTML = '<h2 class="tab-title">🤰 دليل أمان وتعديل الأدوية في الحمل والرضاعة والكبد والكلى</h2>' +
-      '<section class="box green"><h3>أولاً: الحمل والرضاعة</h3>' + tbl('<tr><th>الحالة</th><th>الآمن في مصر</th><th>الممنوع تماماً</th><th>ملاحظة</th></tr>' +
-        map(sf.pregnancy_and_lactation, function (x) { return '<tr><td>' + T(x.condition) + '</td><td>' + T(x.safe_drugs_eg) + '</td><td>' + T(x.contraindicated_drugs_eg) + '</td><td>' + T(x.clinical_pearl) + '</td></tr>'; })) + '</section>' +
-      '<section class="box blue"><h3>ثانياً: قصور الكلى والغسيل الكلوي</h3>' + tbl('<tr><th>الدواء والبراند</th><th>قاعدة eGFR</th><th>البديل الآمن في مصر</th></tr>' +
-        map(sf.renal_impairment_and_dialysis, function (x) { return '<tr><td>' + T(x.drug_class_and_brands) + '</td><td>' + T(x.egfr_cutoff_rule) + '</td><td>' + T(x.safer_egyptian_alternative) + '</td></tr>'; })) + '</section>' +
-      '<section class="box amber"><h3>ثالثاً: مرضى التليف الكبدي</h3>' + tbl('<tr><th>المشكلة</th><th>تجنب تماماً</th><th>الاختيار الآمن في مصر</th></tr>' +
-        map(sf.hepatic_cirrhosis_safety, function (x) { return '<tr><td>' + T(x.clinical_issue) + '</td><td>' + T(x.avoid_completely) + '</td><td>' + T(x.safe_choice_and_dose_eg) + '</td></tr>'; })) + '</section>';
+      '<section class="box green"><h3>أولاً: الحمل والرضاعة</h3>' + tbl(['الحالة', 'الآمن في مصر', 'الممنوع تماماً', 'ملاحظة'],
+        rowsOf(sf.pregnancy_and_lactation, function (x) { return [T(x.condition), T(x.safe_drugs_eg), T(x.contraindicated_drugs_eg), T(x.clinical_pearl)]; })) + '</section>' +
+      '<section class="box blue"><h3>ثانياً: قصور الكلى والغسيل الكلوي</h3>' + tbl(['الدواء والبراند', 'قاعدة eGFR', 'البديل الآمن في مصر'],
+        rowsOf(sf.renal_impairment_and_dialysis, function (x) { return [T(x.drug_class_and_brands), T(x.egfr_cutoff_rule), T(x.safer_egyptian_alternative)]; })) + '</section>' +
+      '<section class="box amber"><h3>ثالثاً: مرضى التليف الكبدي</h3>' + tbl(['المشكلة', 'تجنب تماماً', 'الاختيار الآمن في مصر'],
+        rowsOf(sf.hepatic_cirrhosis_safety, function (x) { return [T(x.clinical_issue), T(x.avoid_completely), T(x.safe_choice_and_dose_eg)]; })) + '</section>';
   } else if (tab === 'rx') {
     var rx = (D.appendices.rx || {}).cases || [];
     st.innerHTML = '<h2 class="tab-title">📝 دليل روشتات العيادة الاسترشادية ومتى تحوّل المريض فوراً (' + nf(rx.length) + ' سيناريو)</h2>' +
       map(rx, function (c) {
         return '<section class="box green"><h3>[' + esc(c.id) + '] ' + T(c.condition_ar) + ' — <span class="ltr">' + esc(c.condition_en) + '</span></h3>' +
           '<p><b>الفحوصات المطلوبة:</b> ' + T(c.workup_before_or_with_rx) + '</p>' +
-          tbl('<tr><th>الصنف الدوائي (العلمي والتجاري المصري)</th><th>طريقة الاستعمال (Sig)</th></tr>' +
-            map(c.prescription_items, function (i) { return '<tr><td><b>' + T(i.item) + '</b></td><td>' + T(i.sig_ar) + '</td></tr>'; })) +
+          tbl(['الصنف الدوائي (العلمي والتجاري المصري)', 'طريقة الاستعمال (Sig)'],
+            rowsOf(c.prescription_items, function (i) { return ['<b>' + T(i.item) + '</b>', T(i.sig_ar)]; })) +
           '<p style="margin-top:.5rem"><b>نصيحة العيان:</b> ' + T(c.counseling_ar) + '</p>' +
           '<p class="red-t" style="margin-top:.375rem"><b>🚨 التحويل الفوري (Urgent Referral):</b> ' + T(c.urgent_referral_red_flags) + '</p></section>';
       });
@@ -710,18 +749,25 @@ function renderStage() {
 }
 function filterDrugRows(v) {
   var q = String(v || '').toLowerCase();
-  Array.prototype.forEach.call(document.querySelectorAll('#drug-tbl tr'), function (tr, i) {
-    if (i === 0) return;
+  Array.prototype.forEach.call(document.querySelectorAll('#drug-tbl tbody tr'), function (tr) {
     tr.style.display = tr.textContent.toLowerCase().indexOf(q) > -1 ? '' : 'none';
   });
 }
 window.filterDrugRows = filterDrugRows;
+
+/* فهرس الموضوع: اقفز للقسم */
+$('stage').addEventListener('click', function (e) {
+  var b = e.target.closest('[data-go]'); if (!b) return;
+  var el = document.getElementById(b.getAttribute('data-go'));
+  if (el) el.scrollIntoView({ behavior: mqReduce.matches ? 'auto' : 'smooth', block: 'start' });
+});
 
 /* ---------- التشغيل ---------- */
 bindScroller($('tlist'), $('totop-list'), nearEnd);
 bindScroller($('stage'), $('totop-stage'));
 
 function start() {
+  $('tabs').scrollLeft = 0;
   D = window.MRCP_EGYPT_DATA;
   if (!D || !D.topics) {
     $('tlist').removeAttribute('aria-busy');
